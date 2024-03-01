@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+    <title>Video blur test</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+            Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+            sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',  'Segoe UI Symbol';
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-text-size-adjust: 100%;
+
+            color-scheme: light dark;
+        }
+
+        code {
+            font-family: 'Cascadia Code', 'JetBrains Mono', Menlo, Monaco, Consolas,
+            'Liberation Mono', 'Courier New', monospace;
+            overflow-wrap: anywhere;
+        }
+
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        body {
+            background: #fff;
+        }
+
+        #maindiv {
+            position: relative;
+            padding: 4rem;
+            height: calc(100% - 8rem);
+        }
+
+        #innermaindiv {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 1rem;
+            /*box-shadow:inset 0 0 0 1px #0009;*/
+            filter: drop-shadow(0 0 2rem rgba(0, 0, 0, 0.5));
+        }
+
+        #graincover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.5;
+            height: 100%;
+            width: 100%;
+            z-index: 2;
+            mix-blend-mode: soft-light;
+
+            background:transparent url("grain-overlay.png") repeat;
+            background-size: 200px;
+        }
+
+        #grainimg {
+            display: none;
+            background-repeat: repeat;
+        }
+
+        #videocover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0);
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            backdrop-filter: blur(50px);
+        }
+
+        #content {
+            color: black;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0);
+            height: 100%;
+            width: 100%;
+            z-index: 3;
+        }
+
+        .backvid {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /*filter: blur(50px);*/
+        }
+
+        #vid-dark {
+            display:none;
+        }
+
+        #textcontainer {
+            margin: 0 6rem 0 6rem;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            filter: drop-shadow(0 0 5rem rgba(255, 255, 255, 1));
+        }
+
+        #maintitle {
+            margin: 0;
+            font-size: 4rem;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            #vid-dark {
+                display:block;
+            }
+            #vid-light {
+                display:none;
+            }
+            #content {
+                color: white;
+            }
+
+            #textcontainer {
+                filter: drop-shadow(0 0 5rem #000);
+            }
+
+            body {
+                background: #1b1b1b;
+            }
+            #innermaindiv {
+                /* box-shadow:inset 0 0 0 1px #fff; */
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            #maintitle {
+                font-size: 3rem;
+            }
+            #maindiv {
+                padding: 2rem;
+                height: calc(100% - 4rem);
+            }
+            #textcontainer {
+                margin: 0 3rem 0 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="maindiv">
+    <div id="innermaindiv">
+        <div id="content">
+            <div id="textcontainer">
+                <h1 id="maintitle">
+                    Video blur test
+                </h1>
+                <p>
+                    As the title suggests.
+                </p>
+            </div>
+        </div>
+        <div id="graincover">
+            <img src="grain-overlay.png" alt="" id="grainimg">
+        </div>
+        <div id="videocover"></div>
+        <video autoplay loop muted id="vid-light" class="backvid">
+            <source src="back-light.webm" type="video/webm">
+            <source src="back-light.mp4" type="video/mp4">
+        </video>
+        <video autoplay loop muted id="vid-dark" class="backvid">
+            <source src="back-dark.webm" type="video/webm">
+            <source src="back-dark.mp4" type="video/mp4">
+        </video>
+    </div>
+</div>
+</body>
+</html>
